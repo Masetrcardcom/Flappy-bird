@@ -4,16 +4,24 @@ from random import randint
 play.set_backdrop((185, 119, 233))
 
 status = 5
+
 start_kub = play.new_box(color='red',height=40,width=100)
 start_knopka = play.new_text('Start')
+
+podzkazka_dlia_ne_ochen_umnih = play.new_text('Извольте нажать SPACE !',color='red',y=-250)
+podzkazka_dlia_ne_ochen_umnih.hide()
+
+restart_kub = play.new_box(color='red',height=40,width=130,y=-70)
+restart_knopka = play.new_text('Restart',y = -70)
+restart_knopka.hide()
+restart_kub.hide()
+         
 @play.repeat_forever
 def restart999():
      global status
      if status == 5:
          status = 3
-         podzkazka_dlia_ne_ochen_umnih = play.new_text('Извольте нажать SPACE !',color='red',y=-250)
-         podzkazka_dlia_ne_ochen_umnih.hide()
-
+         
 
         
 
@@ -21,21 +29,17 @@ def restart999():
          # bird = play.new_image(image = 'bird_1.png',size=140,x=0)
          # bird_kub.start_physics(can_move=True,obeys_gravity=True,stable=True,y_speed = 0)
 
-         restart_kub = play.new_box(color='red',height=40,width=130,y=-70)
-         restart_knopka = play.new_text('Restart',y = -70)
-         restart_knopka.hide()
-         restart_kub.hide()
          
 
        
- 
+
 @start_kub.when_clicked
 def nazhatie():
-    global status
-    status = 4
-    start_knopka.hide()
-    start_kub.hide()
-    podzkazka_dlia_ne_ochen_umnih.show()
+     global status
+     status = 4
+     start_knopka.hide()
+     start_kub.hide()
+     podzkazka_dlia_ne_ochen_umnih.show()
 
 def trubi_img(y_niz,rast):
     delta =515
@@ -101,11 +105,12 @@ def start_program():
                 a = trubi_img(randint(-500,-200),150)
                 trubi_list.append(a)
                 await play.timer(3)
-            elif status==0:
+            else:
                 for tum in trubi_list:
-                    tum[1].hide()
-                    tum[0].hide()
-
+                    tum[1].remove()
+                    tum[0].remove()
+                    trubi_list.remove(tum)
+                    
 
         @play.repeat_forever  
         async def run():
@@ -146,7 +151,7 @@ def start_program():
                             lose.show()
                             chet.show()
                             restart_knopka.show()
-                            restart_kub.show()    
+                            restart_kub.show() 
                             status = 0
                     
 
@@ -174,9 +179,19 @@ def start_program():
             status = 5
             start_knopka.show()
             start_kub.show()
-            
+            lose.hide()
+            chet.words.hide()
+            for tumka in trubi_list:
+                tumka[0].remove()
+                tuka[1].remove()
+                trubi_list.remove(tumka)
+               
 
             
+
+
+
+
 
 
 
